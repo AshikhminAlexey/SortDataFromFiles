@@ -79,15 +79,20 @@ class Processing {
             this.file = file;
         }
 
+
         @Override
         public void run() {
-            FileProcessing fileProcessing = FileRead(file);
-            Object[] contentArr = fileProcessing.Content.split("\\R");
-            Object[] conArray = _convertArray.ConvertArray(contentArr);
-            Object[] sortArray = _sortAlgorithm.SortArray(conArray);
-            String[] sortContentArr = _convertArray.ConvertToString(sortArray);
-            fileProcessing.SortedContent = String.join("\r\n", sortContentArr);
-            FileWrite(fileProcessing);
+            try {
+                FileProcessing fileProcessing = FileRead(file);
+                Object[] contentArr = fileProcessing.Content.split("\\R");
+                Object[] conArray = _convertArray.ConvertArray(contentArr);
+                Object[] sortArray = _sortAlgorithm.SortArray(conArray);
+                String[] sortContentArr = _convertArray.ConvertToString(sortArray);
+                fileProcessing.SortedContent = String.join("\r\n", sortContentArr);
+                FileWrite(fileProcessing);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

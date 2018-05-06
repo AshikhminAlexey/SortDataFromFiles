@@ -3,8 +3,12 @@ public class Main {
 
         try {
             Settings.Instance.GetSettingsFromArgs(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            new Processing(new InsertSortAlgorithm(Settings.Instance), new ConvertArrayToInt(Settings.Instance), Settings.Instance).StartProcess();
+        try {
+			new Processing(new InsertSortAlgorithm(Settings.Instance), new ConvertArrayToInt(Settings.Instance), Settings.Instance).StartProcess();
         } catch (Exception e) {
             e.printStackTrace();
         }
