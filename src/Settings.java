@@ -13,27 +13,31 @@ public class Settings implements ISettings {
 
     @Override
     public void GetSettingsFromArgs(String[] args) throws Exception {
+        if (args.length != 4) {
+            throw new Exception("Invalid parameter count, need four parameter\r\n" +
+                    "example: {work path} --out-prefix={out prefix [any string]} --content-type={content type in [i,s]} --sort-mode={sort mode in [a,d]}");
+        }
+
         String path = args[0];
-        _workDir = new File(path);
-        if (!(_workDir.isFile() || _workDir.isDirectory())) {
+        if (path == null || !((_workDir = new File(path)).isFile() || _workDir.isDirectory())) {
             throw new Exception("First parameter contains invalid path");
         }
 
         _outPrefix = args[1];
-        if (!_outPrefix.contains("--out-prefix=")) {
+        if (_outPrefix == null || !_outPrefix.contains("--out-prefix=")) {
             throw new Exception("Second parameter doesn't contains '--out-prefix'");
         }
 
         _outPrefix = _outPrefix.replace("--out-prefix=", "").trim();
 
         String contentType = args[2];
-        if (!contentType.contains("--content-type=")) {
+        if (contentType == null || !contentType.contains("--content-type=")) {
             throw new Exception("Therd parameter doesn't contains '--content-type='");
         } else {
             contentType = contentType.replace("--content-type=", "").trim();
-            if (contentType.compareTo("i")==0) {
+            if (contentType.compareTo("i") == 0) {
                 _contentType = FileContentType.TypeInt;
-            }else if (contentType.compareTo("s")==0) {
+            } else if (contentType.compareTo("s") == 0) {
                 _contentType = FileContentType.TypeString;
             } else {
                 throw new Exception("Therd parameter after '--content-type=' can contains only 'i' or 's' symbol");
@@ -41,13 +45,13 @@ public class Settings implements ISettings {
         }
 
         String sortMode = args[3];
-        if (!sortMode.contains("--sort-mode=")) {
+        if (sortMode == null || !sortMode.contains("--sort-mode=")) {
             throw new Exception("Therd parameter doesn't contains '--sort-mode='");
         } else {
             sortMode = sortMode.replace("--sort-mode=", "").trim();
-            if (sortMode.compareTo("a")==0) {
+            if (sortMode.compareTo("a") == 0) {
                 _sortMode = SortMode.Asc;
-            } else if (sortMode.compareTo("d")==0) {
+            } else if (sortMode.compareTo("d") == 0) {
                 _sortMode = SortMode.Desc;
             } else {
                 throw new Exception("Therd parameter after '--content-type=' can contains only 'a' or 'd' symbol");
